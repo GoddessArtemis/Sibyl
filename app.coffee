@@ -11,7 +11,7 @@ server.on "message", (msg, rinfo) ->
     msg = msg.toString 'utf8'
     lines = parser.parse msg
     for line in lines
-        if line.type == 'badline'
+        if not line
             # skip badlines for now
         else
             (buckets[line.type + ':' + line.name] ?= []).push line

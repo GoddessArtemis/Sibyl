@@ -6,11 +6,11 @@ lines
     / l:line { return [ l ]; }
 
 line
-    = n:name ' is '   v:value &(eol/!.) { return { name: n, type: 'is',      value: v              }; }
-    / n:name ' took ' v:value &(eol/!.) { return { name: n, type: 'took',    value: v              }; }
-    / n:name ' hit'           &(eol/!.) { return { name: n, type: 'hit'                            }; }
-    / n:name ' happened'      &(eol/!.) { return { name: n, type: 'happened'                       }; }
-    / chars:[^\r\n]*                    { return {          type: 'badline', value: chars.join('') }; }
+    = n:name ' is '   v:value &(eol/!.) { return { name: n, type: 'is',      value: v }; }
+    / n:name ' took ' v:value &(eol/!.) { return { name: n, type: 'took',    value: v }; }
+    / n:name ' hit'           &(eol/!.) { return { name: n, type: 'hit'               }; }
+    / n:name ' happened'      &(eol/!.) { return { name: n, type: 'happened'          }; }
+    / chars:[^\r\n]*                    { return; }
 
 name
     = chars:[-A-Za-z0-9.]+ { return chars.join(''); }
