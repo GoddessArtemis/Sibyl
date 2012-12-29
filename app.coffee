@@ -9,7 +9,7 @@ aggregators =
 
 parser = PEG.buildParser fs.readFileSync('protocol.pegjs', 'utf8')
 server = dgram.createSocket 'udp4'
-buckets = {}
+buckets = starttime: Date.now() / 1000
 
 server.on "message", (msg, rinfo) ->
     time = Date.now() / 1000
@@ -24,10 +24,14 @@ server.on "message", (msg, rinfo) ->
 
 update = ->
     chunk = buckets
-    buckets = {}
+    chunk.endtime = Date.now() / 1000
+    buckets = starttime: chunk.endtime
     aggregates = {}
     for key, lines of chunk
-        aggregates[key] = aggregators[lines[0].type] lines
+        if lines instanceof Array
+            lines.starttime = chunk.starttime
+            lines.endtime = chunk.endtime
+            aggregates[key] = aggregators[lines[0].type] lines
     console.log aggregates
 
 setInterval update, 10000
