@@ -28,10 +28,10 @@ update = ->
     chunk.endtime = Date.now()
     buckets = starttime: chunk.endtime
     aggregates = {}
-    for key, lines of chunk when lines instanceof Array
+    for key, lines of chunk when lines.length
         lines.starttime = chunk.starttime
         lines.endtime = chunk.endtime
-        aggregates[key] = aggregators[lines[0].type] lines
+        aggregates[key] = aggregators[lines[0].type] lines, key, buckets
     console.log aggregates
 
 setInterval update, 10000
