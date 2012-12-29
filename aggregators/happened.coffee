@@ -1,2 +1,4 @@
 module.exports = (lines) ->
-    lines.length
+    for line, i in lines
+        lines[i] = line.time
+    lines
