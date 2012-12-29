@@ -9,10 +9,11 @@ aggregators =
 
 parser = PEG.buildParser fs.readFileSync('protocol.pegjs', 'utf8')
 server = dgram.createSocket 'udp4'
-buckets = starttime: Date.now() / 1000
+
+buckets = starttime: Date.now()
 
 server.on "message", (msg, rinfo) ->
-    time = Date.now() / 1000
+    time = Date.now()
     msg = msg.toString 'utf8'
     lines = parser.parse msg
     for line in lines
@@ -24,7 +25,7 @@ server.on "message", (msg, rinfo) ->
 
 update = ->
     chunk = buckets
-    chunk.endtime = Date.now() / 1000
+    chunk.endtime = Date.now()
     buckets = starttime: chunk.endtime
     aggregates = {}
     for key, lines of chunk
