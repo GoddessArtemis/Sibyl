@@ -11,9 +11,9 @@ module.exports = (lines) ->
     i = j = 0
     while i < lines.length
         value = lines[i]
-        while (i < lines.length) && (lines[i] <= value)
+        while lines[i] <= value
             i++ 
-        while (j < percentiles.length) && (percentiles[j] * lines.length <= i * 100)
+        while percentiles[j] * lines.length <= i * 100
             pcts[percentiles[j]] = value
             j++
 
