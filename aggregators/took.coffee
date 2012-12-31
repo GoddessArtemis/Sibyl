@@ -1,4 +1,4 @@
-percentiles = [0, 1, 5, 10, 50, 90, 95, 99, 100]
+percentiles = [0, 1, 5, 10, 25, 50, 75, 90, 95, 99, 100]
 
 module.exports = (lines) ->
     total = 0
