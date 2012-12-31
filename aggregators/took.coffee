@@ -1,5 +1,3 @@
-percentiles = [0, 1, 5, 10, 25, 50, 75, 90, 95, 99, 100]
-
 maphistogram = (collection, binsize, map = (i) -> i) ->
     histogram = []
     for item in collection
@@ -28,22 +26,15 @@ reducehistogram = (histogram) ->
 
 module.exports = (lines) ->
     total = 0
-    for line, i in lines
+    min = Math.min()
+    max = Math.max()
+    for line in lines
         total += line.value
-        lines[i] = line.value
-    lines.sort (a, b) -> a - b
+        min = Math.min line.value, min
+        max = Math.max line.value, max
+    lines.sort (a, b) -> a.value - b.value
 
-    pcts = {}
-    i = j = 0
-    while i < lines.length
-        value = lines[i]
-        while lines[i] <= value
-            i++ 
-        while percentiles[j] * lines.length <= i * 100
-            pcts[percentiles[j]] = value
-            j++
-
-    histogram = maphistogram lines, 0, (line) -> bin: line, count: 1
+    histogram = maphistogram lines, 0, (line) -> bin: line.value, count: 1
     histogram = reducehistogram histogram
 
     histogramoutput = binsize: histogram.binsize
@@ -54,5 +45,6 @@ module.exports = (lines) ->
     endtime: lines.endtime
     count: lines.length
     mean: total / lines.length
-    percentiles: pcts
+    min: min
+    max: max
     histogram: histogramoutput
