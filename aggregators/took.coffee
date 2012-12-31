@@ -17,13 +17,12 @@ module.exports = (lines) ->
             pcts[percentiles[j]] = value
             j++
 
-    histogram = {}
     size = (pcts[100] - pcts[0]) / 16
-    power = Math.pow(2, Math.floor(Math.log(size) / Math.log(2)))
+    histogram = binsize: Math.pow(2, Math.floor(Math.log(size) / Math.LN2))
     for value in lines
-        bucket = Math.floor(value / power) * power
-        histogram[bucket] ?= 0
-        histogram[bucket] += 1
+        bin = Math.floor(value / histogram.binsize) * histogram.binsize
+        histogram[bin] ?= 0
+        histogram[bin] += 1
 
     starttime: lines.starttime
     endtime: lines.endtime
