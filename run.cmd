@@ -1,2 +1,2 @@
-coffee app
-pause
+@echo off
+foreman run < nul
