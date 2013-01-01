@@ -1,4 +1,4 @@
-assert = require 'assert'
+should = (require 'chai').should()
 happened = require '../../aggregators/happened'
 
 describe 'happened', ->
@@ -8,21 +8,21 @@ describe 'happened', ->
             lines.starttime = 10000
             lines.endtime = 20000
             result = happened lines
-            assert.equal result.starttime, 10000
+            result.starttime.should.equal 10000
 
         it 'should give the correct end time for the lines', ->
             lines = [{name: 'OK', type: 'happened', time: 15000}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = happened lines
-            assert.equal result.starttime, 20000
+            result.endtime.should.equal 20000
 
         it 'should give the correct time for a single line', ->
             lines = [{name: 'OK', type: 'happened', time: 15000}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = happened lines
-            assert.equal result.times[0], 15000
+            result.times[0].should.equal 15000
 
         it 'should give the correct time for multiple lines', ->
             lines = [{name: 'OK', type: 'happened', time: 11000},
@@ -33,11 +33,11 @@ describe 'happened', ->
             lines.starttime = 10000
             lines.endtime = 20000
             result = happened lines
-            assert.deepEqual result.times, [11000, 13000, 15000, 17000, 19000]
+            result.times.should.deep.equal [11000, 13000, 15000, 17000, 19000]
 
         it 'should return no times', ->
             lines = []
             lines.starttime = 10000
             lines.endtime = 20000
             result = happened lines
-            assert.deepEqual result.times, []
+            result.times.should.deep.equal []
