@@ -249,7 +249,7 @@ describe 'took', ->
                     '64': 1
                     binsize: 4
 
-        it.skip 'should give the correct result with many items spaced with gaps', ->
+        it 'should give the correct result with many items spaced with gaps', ->
             lines = []
             for n in [1..100000]
                 for i in [0..31]
@@ -300,7 +300,7 @@ describe 'took', ->
                     '31': 100000
                     binsize: 0.03125
 
-        it.skip 'should give the correct result with many items evenly spaced', ->
+        it 'should give the correct result with many items evenly spaced', ->
             lines = []
             for n in [0...100000]
                 for i in [0..31]
