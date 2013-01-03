@@ -21,18 +21,19 @@ server.on "message", (msg, rinfo) ->
             # skip badlines for now
         else
             line.time = time
-            (buckets[line.type + ':' + line.name] ?= []).push line
+            (buckets[line.type + '-' + line.name] ?= []).push line
 
 update = ->
     chunk = buckets
     chunk.endtime = Date.now()
     buckets = starttime: chunk.endtime
-    aggregates = {}
     for key, lines of chunk when lines.length
         lines.starttime = chunk.starttime
         lines.endtime = chunk.endtime
-        aggregates[key] = aggregators[lines[0].type] lines, key, buckets
-    console.log aggregates
+        aggregate = aggregators[lines[0].type] lines, key, buckets
+        json = JSON.stringify aggregate
+        fs.appendFile './data/' + key, '\x0F' + json + '\x0E', (err) ->
+            if err then console.log key, err
 
 setInterval update, 10000
 server.bind 8126
