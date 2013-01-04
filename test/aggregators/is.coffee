@@ -40,6 +40,17 @@ describe 'is', ->
             result = aggregators.is lines, 'is:OK', {}
             result.total.should.equal 410000
 
+        it 'should give the correct total when there are negative values', ->
+            lines = [{name: 'OK', type: 'is', value:  10, time: 11000},
+                     {name: 'OK', type: 'is', value: -30, time: 13000},
+                     {name: 'OK', type: 'is', value: -50, time: 15000},
+                     {name: 'OK', type: 'is', value:  70, time: 17000},
+                     {name: 'OK', type: 'is', value:  90, time: 19000}]
+            lines.starttime = 10000
+            lines.endtime = 20000
+            result = aggregators.is lines, 'is:OK', {}
+            result.total.should.equal 90000
+
         it 'should give the correct total when there is a starting value', ->
             lines = [{name: 'OK', type: 'is', value: 10, time: 11000},
                      {name: 'OK', type: 'is', value: 30, time: 13000},
@@ -75,6 +86,17 @@ describe 'is', ->
             result = aggregators.is lines, 'is:OK', {}
             result.min.should.equal 5
 
+        it 'should give the correct minimum value when there are negative values', ->
+            lines = [{name: 'OK', type: 'is', value: -10, time: 11000},
+                     {name: 'OK', type: 'is', value:  30, time: 13000},
+                     {name: 'OK', type: 'is', value:  50, time: 15000},
+                     {name: 'OK', type: 'is', value: -70, time: 17000},
+                     {name: 'OK', type: 'is', value:  90, time: 19000}]
+            lines.starttime = 10000
+            lines.endtime = 20000
+            result = aggregators.is lines, 'is:OK', {}
+            result.min.should.equal -70
+
         it 'should give the correct maximum value', ->
             lines = [{name: 'OK', type: 'is', value: 10, time: 11000},
                      {name: 'OK', type: 'is', value: 30, time: 13000},
@@ -97,6 +119,13 @@ describe 'is', ->
             lines.startvalue = 95
             result = aggregators.is lines, 'is:OK', {}
             result.max.should.equal 95
+
+        it 'should give the correct maximum value when all the values are negative', ->
+            lines = [{name: 'OK', type: 'is', value: -10, time: 11000}]
+            lines.starttime = 10000
+            lines.endtime = 20000
+            result = aggregators.is lines, 'is:OK', {}
+            result.max.should.equal -10
 
         it 'should give the correct first time when there is no starting value', ->
             lines = [{name: 'OK', type: 'is', value: 10, time: 11000},
