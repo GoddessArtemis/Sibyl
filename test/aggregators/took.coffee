@@ -88,6 +88,38 @@ describe 'took', ->
                     '50': 1
                     binsize: 0
 
+        it 'should give the correct result with rates provided', ->
+            lines = [{name: 'OK', type: 'took', value: 10, time: 11000, count: 1/0.1},
+                     {name: 'OK', type: 'took', value: 20, time: 12000, count: 1/0.2},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1/0.3},
+                     {name: 'OK', type: 'took', value: 40, time: 14000, count: 1/0.4},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1/0.5},
+                     {name: 'OK', type: 'took', value: 60, time: 16000, count: 1/0.6},
+                     {name: 'OK', type: 'took', value: 70, time: 17000, count: 1/0.7},
+                     {name: 'OK', type: 'took', value: 80, time: 18000, count: 1/0.8},
+                     {name: 'OK', type: 'took', value: 90, time: 19000, count: 1/0.9}]
+            lines.starttime = 10000
+            lines.endtime = 20000
+            result = took lines
+            result.should.deep.equal
+                starttime: 10000
+                endtime: 20000
+                count: 28.289682539682538
+                mean: 31.813718614111377
+                min: 10
+                max: 90
+                histogram:
+                    '10': 10
+                    '20': 5
+                    '30': 3.3333333333333335
+                    '40': 2.5
+                    '50': 2
+                    '60': 1.6666666666666667
+                    '70': 1.4285714285714286
+                    '80': 1.25
+                    '90': 1.1111111111111112
+                    binsize: 0
+
         it 'should give the correct result with 32 unique items but more than 32 total', ->
             lines = ({name: 'OK', type: 'took', value: Math.floor(i / 2), time: 15000, count: 1} for i in [0..63])
             lines.starttime = 10000

@@ -11,14 +11,21 @@ line
     / n:name ' hit'                &(eol/!.) { return { name: n, type: 'hit',     value: 1           }; }
     / n:name ' happened'           &(eol/!.) { return { name: n, type: 'happened'                    }; }
 
-    / n:name ':'      v:value '|g'  &(eol/!.) { return { name: n, type: 'is',      value: v           }; }
-    / n:name ':' !'-' v:value '|ms' &(eol/!.) { return { name: n, type: 'took',    value: v, count: 1 }; }
-    / n:name ':'      v:value '|c'  &(eol/!.) { return { name: n, type: 'hit'      value: v           }; }
+    / n:statsdname ':'      v:value '|g'  r:statsdrate? &(eol/!.) { return { name: n, type: 'is',   value: v               }; }
+    / n:statsdname ':' !'-' v:value '|ms' r:statsdrate? &(eol/!.) { return { name: n, type: 'took', value: v, count: 1 / r }; }
+    / n:statsdname ':'      v:value '|c'  r:statsdrate? &(eol/!.) { return { name: n, type: 'hit',  value: v / r           }; }
 
     / chars:[^\r\n]* { return; }
 
 name
-    = chars:[-A-Za-z0-9.]+ { return chars.join(''); }
+    = chars:[-_A-Za-z0-9.]+ { return chars.join(''); }
+
+statsdname
+    = chars:[^:]+ { return chars.join('').replace(/\s+/g, '_').replace(/[\/]/g, '-').replace(/[^-_A-Za-z0-9.]/g, ''); }
+
+statsdrate
+    = '@' !'-' v:value { return v; }
+    / (!eol .)*        { return 1; }
 
 value
     = neg:'-'? digits:[0-9]+ '.' fraction:[0-9]+ { return +(neg + digits.join('') + '.' + fraction.join('')); }

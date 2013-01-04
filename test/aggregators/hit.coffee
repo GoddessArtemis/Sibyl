@@ -52,3 +52,14 @@ describe 'hit', ->
             lines.endtime = 20000
             result = hit lines
             result.count.should.equal -9
+
+        it 'should give the correct number of hits for lines with values affected by a rate', ->
+            lines = [{name: 'OK', type: 'hit', value: 9.010, time: 11000},
+                     {name: 'OK', type: 'hit', value: 3.153, time: 13000},
+                     {name: 'OK', type: 'hit', value: 6.300, time: 15000},
+                     {name: 'OK', type: 'hit', value: 0.400, time: 17000},
+                     {name: 'OK', type: 'hit', value: 5.264, time: 19000}]
+            lines.starttime = 10000
+            lines.endtime = 20000
+            result = hit lines
+            result.count.should.equal 24.127
