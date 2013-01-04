@@ -42,13 +42,13 @@ describe 'hit', ->
             result = hit lines
             result.count.should.equal 5
 
-        it 'should give the correct number of hits for lines with values greater than 1', ->
-            lines = [{name: 'OK', type: 'hit', value: 9, time: 11000},
-                     {name: 'OK', type: 'hit', value: 3, time: 13000},
-                     {name: 'OK', type: 'hit', value: 6, time: 15000},
-                     {name: 'OK', type: 'hit', value: 2, time: 17000},
-                     {name: 'OK', type: 'hit', value: 5, time: 19000}]
+        it 'should give the correct number of hits for lines with values other than 1', ->
+            lines = [{name: 'OK', type: 'hit', value: -9, time: 11000},
+                     {name: 'OK', type: 'hit', value: -3, time: 13000},
+                     {name: 'OK', type: 'hit', value:  6, time: 15000},
+                     {name: 'OK', type: 'hit', value:  2, time: 17000},
+                     {name: 'OK', type: 'hit', value: -5, time: 19000}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = hit lines
-            result.count.should.equal 25
+            result.count.should.equal -9
