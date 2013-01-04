@@ -30,21 +30,23 @@ pushhistogram = (histogram, value, count) ->
 
 module.exports = (lines) ->
     total = 0
+    count = 0
     min = Math.min()
     max = Math.max()
     histogram = makehistogram()
     for line in lines
-        total += line.value
+        total += line.value * line.count
+        count += line.count
         min = Math.min line.value, min
         max = Math.max line.value, max
-        histogram = pushhistogram histogram, line.value, 1
+        histogram = pushhistogram histogram, line.value, line.count
 
     delete histogram.length
 
     starttime: lines.starttime
     endtime: lines.endtime
-    count: lines.length
-    mean: total / lines.length
+    count: count
+    mean: total / count
     min: min
     max: max
     histogram: histogram

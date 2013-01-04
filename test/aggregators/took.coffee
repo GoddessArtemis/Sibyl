@@ -4,76 +4,76 @@ took = require '../../aggregators/took'
 describe 'took', ->
     describe '#aggregate()', ->
         it 'should give the correct start time for the lines', ->
-            lines = [{name: 'OK', type: 'took', value: 50, time: 15000}]
+            lines = [{name: 'OK', type: 'took', value: 50, time: 15000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.starttime.should.equal 10000
 
         it 'should give the correct end time for the lines', ->
-            lines = [{name: 'OK', type: 'took', value: 50, time: 15000}]
+            lines = [{name: 'OK', type: 'took', value: 50, time: 15000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.endtime.should.equal 20000
 
         it 'should give the correct count', ->
-            lines = [{name: 'OK', type: 'took', value: 10, time: 11000},
-                     {name: 'OK', type: 'took', value: 30, time: 13000},
-                     {name: 'OK', type: 'took', value: 50, time: 15000},
-                     {name: 'OK', type: 'took', value: 70, time: 17000},
-                     {name: 'OK', type: 'took', value: 90, time: 19000}]
+            lines = [{name: 'OK', type: 'took', value: 10, time: 11000, count: 1},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1},
+                     {name: 'OK', type: 'took', value: 70, time: 17000, count: 1},
+                     {name: 'OK', type: 'took', value: 90, time: 19000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.count.should.equal 5
 
         it 'should give the correct count when there are duplicate values', ->
-            lines = [{name: 'OK', type: 'took', value: 30, time: 11000},
-                     {name: 'OK', type: 'took', value: 30, time: 13000},
-                     {name: 'OK', type: 'took', value: 50, time: 15000},
-                     {name: 'OK', type: 'took', value: 70, time: 17000},
-                     {name: 'OK', type: 'took', value: 70, time: 19000}]
+            lines = [{name: 'OK', type: 'took', value: 30, time: 11000, count: 1},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1},
+                     {name: 'OK', type: 'took', value: 70, time: 17000, count: 1},
+                     {name: 'OK', type: 'took', value: 70, time: 19000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.count.should.equal 5
 
         it 'should give the correct minimum value', ->
-            lines = [{name: 'OK', type: 'took', value: 10, time: 11000},
-                     {name: 'OK', type: 'took', value: 30, time: 13000},
-                     {name: 'OK', type: 'took', value: 50, time: 15000},
-                     {name: 'OK', type: 'took', value: 70, time: 17000},
-                     {name: 'OK', type: 'took', value: 90, time: 19000}]
+            lines = [{name: 'OK', type: 'took', value: 10, time: 11000, count: 1},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1},
+                     {name: 'OK', type: 'took', value: 70, time: 17000, count: 1},
+                     {name: 'OK', type: 'took', value: 90, time: 19000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.min.should.equal 10
 
         it 'should give the correct maximum value', ->
-            lines = [{name: 'OK', type: 'took', value: 10, time: 11000},
-                     {name: 'OK', type: 'took', value: 30, time: 13000},
-                     {name: 'OK', type: 'took', value: 50, time: 15000},
-                     {name: 'OK', type: 'took', value: 70, time: 17000},
-                     {name: 'OK', type: 'took', value: 90, time: 19000}]
+            lines = [{name: 'OK', type: 'took', value: 10, time: 11000, count: 1},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1},
+                     {name: 'OK', type: 'took', value: 70, time: 17000, count: 1},
+                     {name: 'OK', type: 'took', value: 90, time: 19000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.max.should.equal 90
 
         it 'should give the correct mean', ->
-            lines = [{name: 'OK', type: 'took', value: 10, time: 11000},
-                     {name: 'OK', type: 'took', value: 30, time: 13000},
-                     {name: 'OK', type: 'took', value: 50, time: 15000},
-                     {name: 'OK', type: 'took', value: 80, time: 17000},
-                     {name: 'OK', type: 'took', value: 100, time: 19000}]
+            lines = [{name: 'OK', type: 'took', value: 10, time: 11000, count: 1},
+                     {name: 'OK', type: 'took', value: 30, time: 13000, count: 1},
+                     {name: 'OK', type: 'took', value: 50, time: 15000, count: 1},
+                     {name: 'OK', type: 'took', value: 80, time: 17000, count: 1},
+                     {name: 'OK', type: 'took', value: 100, time: 19000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
             result.mean.should.equal 54
 
         it 'should give the correct result with 1 item', ->
-            lines = [{name: 'OK', type: 'took', value: 50, time: 15000}]
+            lines = [{name: 'OK', type: 'took', value: 50, time: 15000, count: 1}]
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
@@ -89,7 +89,7 @@ describe 'took', ->
                     binsize: 0
 
         it 'should give the correct result with 32 unique items but more than 32 total', ->
-            lines = ({name: 'OK', type: 'took', value: Math.floor(i / 2), time: 15000} for i in [0..63])
+            lines = ({name: 'OK', type: 'took', value: Math.floor(i / 2), time: 15000, count: 1} for i in [0..63])
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
@@ -136,8 +136,8 @@ describe 'took', ->
                     binsize: 0
 
         it 'should give the correct result with 33 unique items where 32 bins is correct', ->
-            lines = ({name: 'OK', type: 'took', value: i, time: 15000} for i in [1..32])
-            lines.push {name: 'OK', type: 'took', value: 1.5, time: 15000}
+            lines = ({name: 'OK', type: 'took', value: i, time: 15000, count: 1} for i in [1..32])
+            lines.push {name: 'OK', type: 'took', value: 1.5, time: 15000, count: 1}
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
@@ -184,8 +184,8 @@ describe 'took', ->
                     binsize: 1
 
         it 'should give the correct result with 33 unique items where 32 bins is correct', ->
-            lines = ({name: 'OK', type: 'took', value: i, time: 15000} for i in [1..32])
-            lines.push {name: 'OK', type: 'took', value: 1000000, time: 15000}
+            lines = ({name: 'OK', type: 'took', value: i, time: 15000, count: 1} for i in [1..32])
+            lines.push {name: 'OK', type: 'took', value: 1000000, time: 15000, count: 1}
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
@@ -218,7 +218,7 @@ describe 'took', ->
                     binsize: 2
 
         it 'should give the correct result with more than 32 unique items where 16 bins is correct', ->
-            lines = ({name: 'OK', type: 'took', value: i, time: 15000} for i in [0..64])
+            lines = ({name: 'OK', type: 'took', value: i, time: 15000, count: 1} for i in [0..64])
             lines.starttime = 10000
             lines.endtime = 20000
             result = took lines
@@ -253,7 +253,7 @@ describe 'took', ->
             lines = []
             for n in [1..100000]
                 for i in [0..31]
-                    lines.push {name: 'OK', type: 'took', value: i + ((n - 1) / (100000 - 1) / 64), time: 15000}
+                    lines.push {name: 'OK', type: 'took', value: i + ((n - 1) / (100000 - 1) / 64), time: 15000, count: 1}
             lines.starttime = 10000
             lines.endtime = 20000
             lines.log = true
@@ -304,7 +304,7 @@ describe 'took', ->
             lines = []
             for n in [0...100000]
                 for i in [0..31]
-                    lines.push {name: 'OK', type: 'took', value: i + n / 100000, time: 15000}
+                    lines.push {name: 'OK', type: 'took', value: i + n / 100000, time: 15000, count: 1}
             lines.starttime = 10000
             lines.endtime = 20000
             lines.log = true
