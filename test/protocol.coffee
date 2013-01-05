@@ -36,3 +36,19 @@ describe 'parser', ->
         it 'should parse happened lines correctly', ->
             result = parser.parse 'foo happened'
             result.should.deep.equal [{name: 'foo', type: 'happened'}]
+
+        it 'should parse new lines correctly', ->
+            result = parser.parse 'a happened\nb happened\rc happened\n\rd happened\r\ne happened'
+            result.should.deep.equal [{name: 'a', type: 'happened'}
+                                      {name: 'b', type: 'happened'}
+                                      {name: 'c', type: 'happened'}
+                                      {name: 'd', type: 'happened'}
+                                      {name: 'e', type: 'happened'}]
+
+        it 'should reject bad lines', ->
+            result = parser.parse 'wasd'
+            result.should.deep.equal [undefined]
+
+        it 'should parse a valid line surrounded by garbage', ->
+            result = parser.parse 'garbage\nfoo hit\ngarbage'
+            result.should.deep.equal [undefined, {name: 'foo', type: 'hit', value: 1}, undefined]
