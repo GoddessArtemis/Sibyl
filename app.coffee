@@ -36,4 +36,4 @@ update = ->
             if err then console.log key, err
 
 setInterval update, 10000
-server.bind 8126
+server.bind process.env.PORT

@@ -1,2 +1,2 @@
 @echo off
-foreman run < nul
+foreman start -p 8126 < nul
