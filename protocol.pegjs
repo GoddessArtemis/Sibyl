@@ -21,11 +21,11 @@ name
     = chars:[-_A-Za-z0-9.]+ { return chars.join(''); }
 
 statsdname
-    = chars:[^:]+ { return chars.join('').replace(/\s+/g, '_').replace(/[\/]/g, '-').replace(/[^-_A-Za-z0-9.]/g, ''); }
+    = chars:[^:\r\n]+ { return chars.join('').replace(/\s+/g, '_').replace(/[\/]/g, '-').replace(/[^-_A-Za-z0-9.]/g, ''); }
 
 statsdrate
-    = '@' !'-' v:value { return v; }
-    / (!eol .)*        { return 1; }
+    = '|@' !'-' v:value { return v; }
+    / (!eol .)*         { return 1; }
 
 value
     = neg:'-'? digits:[0-9]+ '.' fraction:[0-9]+ { return +(neg + digits.join('') + '.' + fraction.join('')); }
